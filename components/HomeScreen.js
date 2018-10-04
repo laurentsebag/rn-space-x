@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from '../reducers';
+import {StyleSheet, Text, View, Image} from 'react-native/Libraries/react-native/react-native-implementation';
 import LaunchesList from './LaunchesList';
 
 type Props = {};
@@ -46,6 +49,8 @@ export default class HomeScreen extends Component<Props> {
         };
 
         this._onItemPress = this._onItemPress.bind(this);
+
+        this.store = createStore(rootReducer);
     }
 
     _onItemPress(item) {
@@ -61,11 +66,11 @@ export default class HomeScreen extends Component<Props> {
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.content}>
+            <Provider store={this.store}>
+                <View style={styles.container}>
                     <LaunchesList onItemPress={this._onItemPress}/>
                 </View>
-            </View>
+            </Provider>
         );
     }
 }
@@ -74,8 +79,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F5FCFF',
-    },
-    content: {
-        flex: 1,
     }
 });

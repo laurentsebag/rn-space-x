@@ -4,7 +4,6 @@ import DetailsPage from './DetailsPage'
 import FavouritesPage from './FavouritesPage'
 import {createStackNavigator} from "react-navigation";
 
-
 const HomeStack = createStackNavigator({
     Home: { screen: HomeScreen },
     Details: { screen: DetailsPage }

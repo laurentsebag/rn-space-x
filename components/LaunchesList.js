@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text} from 'react-native';
-import {FlatList} from 'react-native';
-import LaunchesService from "./LaunchesService";
+import {StyleSheet, Text} from 'react-native/Libraries/react-native/react-native-implementation';
+import {FlatList} from 'react-native/Libraries/react-native/react-native-implementation';
+import LaunchesService from "../services/LaunchesService";
 import LaunchListItem from "./LaunchListItem";
 
 type Props = {};
