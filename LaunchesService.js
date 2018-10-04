@@ -14,6 +14,14 @@ export default class LaunchesService {
         // });
         return fetch('https://api.spacexdata.com/v3/launches')
             .then((response) => response.json())
+            .then((json) => {
+                return json.map((item) => {
+                    return {
+                        title: item.mission_name,
+                        image: item.links && item.links.mission_patch
+                    };
+                });
+            })
             .catch((error) => {
                 console.error('failed to request data', error);
                 return {error};

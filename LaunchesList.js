@@ -23,13 +23,8 @@ export default class LaunchesList extends Component<Props> {
             .then((data) => {
                 console.log('received: ', data);
                 this.setState({
-                    list: data.map((item) => {
-                        return {
-                            title: item.mission_name,
-                            image: item.links && item.links.mission_patch
-                        }
-                    })
-                })
+                    list: data
+                });
             });
     }
 
