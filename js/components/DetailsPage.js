@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Image, Button} from 'react-native/Libraries/react-native/react-native-implementation';
+import {addFavourite} from '../actions/index'
+import { connect } from "react-redux";
 
 type Props = {};
+
+const NAV_PARAM_MODEL = 'model';
 
 export default class DetailsPage extends Component<Props> {
     static navigationOptions = ({ navigation }) => {
         return {
-            title: `Launch details: ${navigation.getParam('title')}`,
+            title: `Launch details: ${navigation.getParam(NAV_PARAM_MODEL).title}`,
         };
     };
 
@@ -21,6 +25,12 @@ export default class DetailsPage extends Component<Props> {
     }
 
     onFavouriteButtonPress() {
+        const { navigation } = this.props;
+
+        const model = navigation.getParam(NAV_PARAM_MODEL);
+        console.warn('addToFavs', model);
+        //TODO fix this
+        // this.props.dispatch(addFavourite(model.key));
     }
 
     render() {
@@ -29,7 +39,7 @@ export default class DetailsPage extends Component<Props> {
             <View style={styles.container}>
                 <Image
                     style={styles.detail}
-                    source={{uri: navigation.getParam('image')}}
+                    source={{uri: navigation.getParam(NAV_PARAM_MODEL).image}}
                 />
                 <Button
                     onPress={this.onFavouriteButtonPress}
@@ -53,3 +63,5 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     }
 });
+
+// export default connect(state => state)(DetailsPage);

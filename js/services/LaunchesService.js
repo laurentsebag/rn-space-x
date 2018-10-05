@@ -1,12 +1,12 @@
 export default class LaunchesService {
     fetchData() {
         const staticContent = [
-            {title: 'hello'},
-            {title: 'world'},
-            {title: 'ready'},
-            {title: 'to'},
-            {title: 'take'},
-            {title: 'off'}
+            {mission_name: 'hello'},
+            {mission_name: 'world'},
+            {mission_name: 'ready'},
+            {mission_name: 'to'},
+            {mission_name: 'take'},
+            {mission_name: 'off'}
         ];
 
         return new Promise((resolve) => {

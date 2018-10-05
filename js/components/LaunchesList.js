@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text} from 'react-native/Libraries/react-native/react-native-implementation';
 import {FlatList} from 'react-native/Libraries/react-native/react-native-implementation';
 import LaunchesService from "../services/LaunchesService";
+import LaunchesAdapter from "../adapters/LaunchesAdapter";
 import LaunchListItem from "./LaunchListItem";
 
 type Props = {};
@@ -19,12 +20,11 @@ export default class LaunchesList extends Component<Props> {
 
     componentDidMount() {
         const launchesService = new LaunchesService();
+        const launchesAdapter = new LaunchesAdapter();
         launchesService.fetchData()
+            .then(data => launchesAdapter.adapt(data))
             .then((data) => {
-                console.log('received: ', data);
-                this.setState({
-                    list: data
-                });
+                this.setState({ list: data });
             });
     }
 
