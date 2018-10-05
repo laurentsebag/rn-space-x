@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import rootReducer from '../reducers/index';
-import {StyleSheet, Text, View, Image} from 'react-native/Libraries/react-native/react-native-implementation';
+import {StyleSheet, View} from 'react-native';
+import { connect } from 'react-redux'
 import LaunchesList from './LaunchesList';
 
 type Props = {};
 
-export default class HomeScreen extends Component<Props> {
+class HomeScreen extends Component<Props> {
     static navigationOptions = {
         title: 'SpaceX Launches',
     };
@@ -15,33 +13,19 @@ export default class HomeScreen extends Component<Props> {
     constructor(props) {
         super(props);
 
-        this.state = {
-            image: {uri: ''},
-        };
-
         this._onItemPress = this._onItemPress.bind(this);
-
-        this.store = createStore(rootReducer);
     }
 
-    _onItemPress(item) {
-        const { navigate } = this.props.navigation;
-
-        console.log('item pressed', item);
-        this.setState({
-            image: {uri: item.image},
-        });
-
-        navigate('Details', { model: item });
+    _onItemPress(model) {
+        const {navigate} = this.props.navigation;
+        navigate('Details', {model});
     }
 
     render() {
         return (
-            <Provider store={this.store}>
-                <View style={styles.container}>
-                    <LaunchesList onItemPress={this._onItemPress}/>
-                </View>
-            </Provider>
+            <View style={styles.container}>
+                <LaunchesList onItemPress={this._onItemPress}/>
+            </View>
         );
     }
 }
@@ -52,3 +36,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     }
 });
+
+export default connect()(HomeScreen)

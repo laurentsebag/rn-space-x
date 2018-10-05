@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Image, Button} from 'react-native/Libraries/react-native/react-native-implementation';
-import {addFavourite} from '../actions/index'
-import { connect } from "react-redux";
+import {Button, Image, StyleSheet, View} from 'react-native';
+import {addFavourite, removeFavourite} from '../actions/index'
+import {connect} from "react-redux";
 
 type Props = {};
 
 const NAV_PARAM_MODEL = 'model';
 
-export default class DetailsPage extends Component<Props> {
-    static navigationOptions = ({ navigation }) => {
+class DetailsPage extends Component<Props> {
+    static navigationOptions = ({navigation}) => {
         return {
             title: `Launch details: ${navigation.getParam(NAV_PARAM_MODEL).title}`,
         };
@@ -17,24 +17,23 @@ export default class DetailsPage extends Component<Props> {
     constructor(props) {
         super(props);
 
-        this.state = {
-            favouriteText: 'Add to favourites'
-        };
-
         this.onFavouriteButtonPress = this.onFavouriteButtonPress.bind(this);
     }
 
     onFavouriteButtonPress() {
-        const { navigation } = this.props;
+        const {navigation} = this.props;
 
         const model = navigation.getParam(NAV_PARAM_MODEL);
-        console.warn('addToFavs', model);
-        //TODO fix this
-        // this.props.dispatch(addFavourite(model.key));
+        if (!this.props.isFavourite) {
+            this.props.dispatch(addFavourite(model.key));
+        } else {
+            this.props.dispatch(removeFavourite(model.key));
+        }
     }
 
     render() {
-        const { navigation } = this.props;
+        const {navigation} = this.props;
+
         return (
             <View style={styles.container}>
                 <Image
@@ -43,7 +42,7 @@ export default class DetailsPage extends Component<Props> {
                 />
                 <Button
                     onPress={this.onFavouriteButtonPress}
-                    title={this.state.favouriteText}
+                    title={this.props.isFavourite ? 'Remove from favourites' : 'Add to favourites'}
                     color="#3e2465"
                     accessibilityLabel="Learn more about this purple button"
                 />
@@ -64,4 +63,9 @@ const styles = StyleSheet.create({
     }
 });
 
-// export default connect(state => state)(DetailsPage);
+
+const mapStateToProps = (state, ownProps) => ({
+    isFavourite: state.favourites.indexOf(ownProps.navigation.getParam(NAV_PARAM_MODEL).key) !== -1
+});
+
+export default connect(mapStateToProps)(DetailsPage);

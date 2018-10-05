@@ -3,11 +3,10 @@ const favourites = (state = [], action) => {
         case 'ADD_FAVOURITE':
             return [
                 ...state,
-                { id: action.id }
+                action.id
             ];
         case 'REMOVE_FAVOURITE':
-            //TODO remove id from list of favourites
-            return state;
+            return state.filter((item) => item !== action.id);
         default:
             return state;
     }
