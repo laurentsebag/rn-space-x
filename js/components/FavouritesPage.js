@@ -19,7 +19,11 @@ class FavouritesPage extends Component<Props> {
 
         this.state = {
             placeholder: 'Add content to your favourites and come back.',
-            list: []
+            list: [],
+            containerStyle: {
+                justifyContent: 'center',
+                alignItems: 'center'
+            }
         };
 
         this._onItemPress = this._onItemPress.bind(this);
@@ -43,7 +47,13 @@ class FavouritesPage extends Component<Props> {
             .then(data => launchesAdapter.adapt(data))
             .then(data => data.filter(favourite => favourites.indexOf(favourite.key) !== -1))
             .then((data) => {
-                this.setState({ list: data });
+                this.setState({
+                    list: data,
+                    containerStyle: (data.length !== 0 ? {} : {
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    })
+                });
             });
     }
 
@@ -64,7 +74,7 @@ class FavouritesPage extends Component<Props> {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={{...styles.container, ...this.state.containerStyle}}>
                 {this.renderContent()}
             </View>
         );

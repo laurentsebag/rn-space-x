@@ -24,6 +24,9 @@ export default class LaunchesList extends Component<Props> {
             .then(data => launchesAdapter.adapt(data))
             .then((data) => {
                 this.setState({ list: data });
+            })
+            .catch(() => {
+                this.setState({ list: [{ key: '0', title: 'error: can\'t load data'}] });
             });
     }
 
